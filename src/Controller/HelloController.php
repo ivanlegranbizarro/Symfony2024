@@ -21,9 +21,9 @@ class HelloController extends AbstractController
     {
         $message = "Hello $name";
 
-        return $this->render('hello/index.html.twig', [
-            'controller_name' => 'HelloController',
+        return $this->render('hello/hello.html.twig', [
             'message' => $message,
+            'name' => $name
         ]);
     }
 }
