@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}All microposts{% endblock %}
+
+{% block body %}
+    <div>
+        {% if microposts %}
+            {% for micropost in microposts %}
+                <div>
+                    <a href="{{ path('micropost_show', { micropost: micropost.id }) }}">{{ micropost.title }}</a>
+                </div>
+            {% endfor %}
+        {% else %}
+            There's no microposts here yet!
+        {% endif %}
+    </div>
+{% endblock %}
