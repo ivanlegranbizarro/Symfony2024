@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Detail for micropost {{ micropost.title }}
+{% endblock %}
+
+{% block body %}
+    <h3>{{ micropost.title }}</h3>
+    <div>{{ micropost.content }}</div>
+    <div style="color: grey">
+        {% if micropost.createdDate < date('-1year') %}
+            Older than 1 year
+        {% else %}
+            {{ micropost.createdDate|date('d/m/Y') }}
+        {% endif %}
+    </div>
+{% endblock %}
+
+
