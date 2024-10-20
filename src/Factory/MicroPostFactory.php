@@ -42,8 +42,6 @@ final class MicroPostFactory extends PersistentProxyObjectFactory
      */
     protected function initialize(): static
     {
-        return $this
-            // ->afterInstantiate(function(MicroPost $microPost): void {})
-        ;
+            ;
     }
 }
