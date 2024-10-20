@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\MicroPost;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -27,6 +28,9 @@ class MicroPostFormType extends AbstractType
                     'minlength' => 10,
                     'maxlength' => 500,
                 ],
+            ])
+            ->add('save', SubmitType::class, [
+                'label' => $options['button_label'],
             ]);
     }
 
@@ -34,6 +38,7 @@ class MicroPostFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => MicroPost::class,
+            'button_label' => 'Save',
         ]);
     }
 }

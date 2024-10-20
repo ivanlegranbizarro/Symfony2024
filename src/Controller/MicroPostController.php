@@ -53,4 +53,26 @@ class MicroPostController extends AbstractController
             'form' => $form
         ]);
     }
+
+
+    #[Route('/{micropost}/update', name: 'update', methods: ['GET', 'POST'],
+        priority: 3)]
+    public function update(Request $request, EntityManagerInterface $entityManager, MicroPost $micropost): Response
+    {
+        $form = $this->createForm(MicroPostFormType::class, $micropost, [
+            'button_label' => 'Update'
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+            $this->addFlash('success', 'Post updated!');
+            return $this->redirectToRoute('micropost_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('micro_post/update.html.twig', [
+            'micropost' => $micropost,
+            'form' => $form
+        ]);
+    }
 }
