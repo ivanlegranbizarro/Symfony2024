@@ -21,7 +21,8 @@
             <a href="#">user@email.com</a>
           </div>
           <div>
-            <a href="{{ path('micropost_update', { micropost: micropost.id }) }}">Edit</a>
+            <a href="{{ path('micropost_update', { micropost: micropost.id }) }}" class="mr-2">Edit</a>
+            <a href="{{ path('micropost_add_comment', { micropost: micropost.id }) }}">Comment</a>
           </div>
         </div>
       {% endfor %}

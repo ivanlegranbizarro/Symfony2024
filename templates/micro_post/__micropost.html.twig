@@ -1,0 +1,13 @@
+<h3>{{ micropost.title }}</h3>
+<div>{{ micropost.content }}</div>
+<div style="color: grey">
+  {% if micropost.createdDate < date('-1year') %}
+    Older than 1 year
+  {% else %}
+    {{ micropost.createdDate|date('d/m/Y') }}
+  {% endif %}
+  <div class="flex">
+    <a href="{{ path('micropost_update', { micropost: micropost.id }) }}" class="mr-2">Edit</a>
+    <a href="{{ path('micropost_add_comment', { micropost: micropost.id }) }}">Add Comment</a>
+  </div>
+</div>
