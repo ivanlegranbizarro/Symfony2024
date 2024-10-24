@@ -1,17 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}All microposts{% endblock %}
+{% block title %}
+  All microposts
+{% endblock %}
 
 {% block body %}
-    <div>
-        {% if microposts %}
-            {% for micropost in microposts %}
-                <div>
-                    <a href="{{ path('micropost_show', { micropost: micropost.id }) }}">{{ micropost.title }}</a>
-                </div>
-            {% endfor %}
-        {% else %}
-            There's no microposts here yet!
-        {% endif %}
-    </div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+    {% if microposts %}
+      {% for micropost in microposts %}
+        <div class="mb-4">
+          <div class="text-2xl">
+            <a href="{{ path('micropost_show', { micropost: micropost.id }) }}">{{ micropost.title }}</a>
+          </div>
+          <div class="text-xl dark:text-gray-400">{{ micropost.content }}</div>
+          <div class="text-gray-500 dark:text-gray-400">{{ micropost.createdDate|date('d/m/Y') }}</div>
+          <div>
+            <a href="#">Like <span class="px-2 rounded-md bg-gray-200 dark:bg-gray-700">0</span></a>
+          </div>
+          <div class="text-sm text-gray-500 dark:text-gray-400">
+            <a href="#">user@email.com</a>
+          </div>
+          <div>
+            <a href="{{ path('micropost_update', { micropost: micropost.id }) }}">Edit</a>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      There's no microposts here yet!
+    {% endif %}
+  </div>
 {% endblock %}

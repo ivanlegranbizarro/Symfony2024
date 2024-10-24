@@ -20,6 +20,7 @@ class MicroPostFormType extends AbstractType
                     'required' => true,
                     'minlength' => 5,
                     'maxlength' => 255,
+                    'class' => 'block w-full p-2 border rounded-md',
                 ],
             ])
             ->add('content', TextareaType::class, [
@@ -27,10 +28,14 @@ class MicroPostFormType extends AbstractType
                     'required' => true,
                     'minlength' => 10,
                     'maxlength' => 500,
+                    'class' => 'block w-full p-2 border rounded-md',
                 ],
             ])
             ->add('save', SubmitType::class, [
                 'label' => $options['button_label'],
+                'attr' => [
+                    'class' => 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded',
+                ],
             ]);
     }
 

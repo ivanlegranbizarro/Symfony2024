@@ -1,11 +1,20 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Create new Micropost
+  Create new Micropost
 {% endblock %}
-
+{% block bread %}
+  → Add Post
+{% endblock %}
 {% block body %}
-    {{ form(form) }}
+  <div class="max-w-xl mx-auto p-4 mt-10 bg-white rounded shadow">
+    {{ form_start(form) }}
+
+    {{ form_row(form.title) }}
+    {{ form_row(form.content) }}
+
+    <div class="mt-4">{{ form_widget(form.save, { attr: { class: 'w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' } }) }}</div>
+
+    {{ form_end(form) }}
+  </div>
 {% endblock %}
-
-
