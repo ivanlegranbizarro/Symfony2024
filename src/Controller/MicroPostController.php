@@ -19,7 +19,7 @@ class MicroPostController extends AbstractController
     #[Route('', name: 'index', methods: ['GET'])]
     public function index(MicroPostRepository $repository): Response
     {
-        $microposts = $repository->findAll();
+        $microposts = $repository->findAllMicroPostsWithComments();
         return $this->render('micro_post/index.html.twig', [
             'microposts' => $microposts,
         ]);

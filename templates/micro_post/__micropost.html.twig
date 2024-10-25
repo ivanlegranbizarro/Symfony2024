@@ -1,13 +1,21 @@
-<h3>{{ micropost.title }}</h3>
-<div>{{ micropost.content }}</div>
-<div style="color: grey">
-  {% if micropost.createdDate < date('-1year') %}
-    Older than 1 year
-  {% else %}
-    {{ micropost.createdDate|date('d/m/Y') }}
-  {% endif %}
+<div class="mb-4">
+  <h3 class="text-2xl"><a href="{{ path('micropost_show', { micropost: micropost.id }) }}">{{ micropost.title }}</a></h3>
+  <div class="text-xl dark:text-gray-400">{{ micropost.content }}</div>
+  <div class="text-gray-500 dark:text-gray-400">
+    {% if micropost.createdDate < date('-1year') %}
+      Older than 1 year
+    {% else %}
+      {{ micropost.createdDate|date('d/m/Y') }}
+    {% endif %}
+  </div>
+  <div>
+    <a href="#">Like <span class="px-2 rounded-md bg-gray-200 dark:bg-gray-700">0</span></a>
+  </div>
+  <div class="text-sm text-gray-500 dark:text-gray-400">
+    <a href="#">user@email.com</a>
+  </div>
   <div class="flex">
     <a href="{{ path('micropost_update', { micropost: micropost.id }) }}" class="mr-2">Edit</a>
-    <a href="{{ path('micropost_add_comment', { micropost: micropost.id }) }}">Add Comment</a>
+    <a href="{{ path('micropost_add_comment', { micropost: micropost.id }) }}">Comment <span class="px-2 rounded-md bg-gray-200 dark:bg-gray-700">{{ micropost.comments.count }}</span></a>
   </div>
 </div>

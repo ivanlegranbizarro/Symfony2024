@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Comment
 {
     #[ORM\Id]
@@ -23,6 +24,9 @@ class Comment
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
     private ?MicroPost $microPost = null;
+
+    #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
+    private ?\DateTimeImmutable $createdDate = null;
 
     public function getId(): ?int
     {
@@ -51,5 +55,16 @@ class Comment
         $this->microPost = $microPost;
 
         return $this;
+    }
+
+    public function getCreatedDate(): ?\DateTimeImmutable
+    {
+        return $this->createdDate;
+    }
+
+    #[ORM\PrePersist]
+    public function setCreatedDate(): void
+    {
+        $this->createdDate = new \DateTimeImmutable();
     }
 }
