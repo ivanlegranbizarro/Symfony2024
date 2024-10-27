@@ -40,11 +40,16 @@ class MicroPostRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
-    public function findAllMicroPostsWithComments(): array
+    public function findAllMicroPostsWithCommentsAndAuthor(): array
     {
         return $this->createQueryBuilder('m')
             ->leftJoin('m.comments', 'c')
             ->addSelect('c')
+            ->leftJoin('m.author', 'a')
+            ->addSelect('a')
+            ->leftJoin('a.userProfile', 'up')
+            ->addSelect('up')
+            ->distinct()
             ->getQuery()
             ->getResult();
     }

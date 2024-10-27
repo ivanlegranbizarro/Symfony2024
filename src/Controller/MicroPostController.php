@@ -14,14 +14,14 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[Route('/micropost', name: 'micropost_')]
 #[IsGranted('ROLE_USER')]
+#[Route('/micropost', name: 'micropost_')]
 class MicroPostController extends AbstractController
 {
     #[Route('', name: 'index', methods: ['GET'])]
     public function index(MicroPostRepository $repository): Response
     {
-        $microposts = $repository->findAllMicroPostsWithComments();
+        $microposts = $repository->findAllMicroPostsWithCommentsAndAuthor();
         return $this->render('micro_post/index.html.twig', [
             'microposts' => $microposts,
         ]);
