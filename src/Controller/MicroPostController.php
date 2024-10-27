@@ -12,8 +12,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/micropost', name: 'micropost_')]
+#[IsGranted('ROLE_USER')]
 class MicroPostController extends AbstractController
 {
     #[Route('', name: 'index', methods: ['GET'])]
@@ -42,6 +44,7 @@ class MicroPostController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $micropost->setAuthor($this->getUser());
             $entityManager->persist($micropost);
             $entityManager->flush();
 
@@ -92,6 +95,7 @@ class MicroPostController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $comment = $form->getData();
             $comment->setMicroPost($micropost);
+            $comment->setAuthor($this->getUser());
 
             $entityManager->persist($comment);
             $entityManager->flush();
