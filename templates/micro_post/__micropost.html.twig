@@ -8,11 +8,24 @@
       {{ micropost.createdDate|date('d/m/Y') }}
     {% endif %}
   </div>
-  <div>
-    <a href="#">Like <span class="px-2 rounded-md bg-gray-200 dark:bg-gray-700">0</span></a>
-  </div>
+
+  {% if micropost.likedBy.contains(app.user) %}
+    <div>
+      <a href="{{ path('unlike', { micropost: micropost.id }) }}">
+        Unlike
+        <span class="px-2 rounded-md bg-gray-200 dark:bg-gray-700">{{ micropost.likedBy.count }}</span>
+      </a>
+    </div>
+  {% else %}
+    <div>
+      <a href="{{ path('like', { micropost: micropost.id }) }}">
+        Like
+        <span class="px-2 rounded-md bg-gray-200 dark:bg-gray-700">{{ micropost.likedBy.count }}</span>
+      </a>
+    </div>
+  {% endif %}
   <div class="text-sm text-gray-500 dark:text-gray-400">
-    <a href="#">{{ micropost.author.email }}</a>
+    <a href="{{ path('app_profile', { user: micropost.author.id }) }}">{{ micropost.author.email }}</a>
   </div>
   <div class="flex">
     <a href="{{ path('micropost_update', { micropost: micropost.id }) }}" class="mr-2">Edit</a>

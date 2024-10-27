@@ -36,6 +36,7 @@ class MicroPostController extends AbstractController
     }
 
 
+    #[IsGranted('ROLE_VERIFIED_USER')]
     #[Route('/add', name: 'add', methods: ['GET', 'POST'], priority: 2)]
     public function store(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -60,6 +61,7 @@ class MicroPostController extends AbstractController
     }
 
 
+    #[IsGranted('POST_EDIT', 'micropost')]
     #[Route(
         '/{micropost}/update',
         name: 'update',
@@ -109,5 +111,18 @@ class MicroPostController extends AbstractController
             'micropost' => $micropost,
             'form' => $form
         ]);
+    }
+
+
+    #[IsGranted('POST_DELETE', 'micropost')]
+    #[Route('/{micropost}/delete', name: 'delete', methods: ['POST'], priority: 5)]
+    public function delete_check(Request $request, MicroPost $micropost, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $micropost->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($micropost);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('micropost_index', [], Response::HTTP_SEE_OTHER);
     }
 }

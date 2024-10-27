@@ -1,0 +1,9 @@
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+  {% if app.user.id != user.id %}
+    {% if not app.user.follows.contains(user) %}
+      <a href="{{ path('app_follow', { userToFollow: user.id }) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Follow</a>
+    {% else %}
+      <a href="{{ path('app_unfollow', { userToUnfollow: user.id }) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Unfollow</a>
+    {% endif %}
+  {% endif %}
+{% endif %}
