@@ -1,41 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}
+  Log in!
+{% endblock %}
 
 {% block body %}
-    <form method="post" class="max-w-sm mx-auto p-6 bg-white rounded shadow-md">
-        {% if error %}
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-                {{ error.messageKey|trans(error.messageData, 'security') }}
-            </div>
-        {% endif %}
+  <form method="post" class="max-w-md mx-auto p-6 bg-white rounded shadow-md mt-10">
+    {% if error %}
+      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
 
-        {% if app.user %}
-            <div class="mb-3 text-center">
-                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}" class="text-blue-500 hover:underline">Logout</a>
-            </div>
-        {% endif %}
+    {% if app.user %}
+      <div class="mb-3 text-center">
+        You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}" class="text-blue-500 hover:underline">Logout</a>
+      </div>
+    {% endif %}
 
-        <h1 class="text-2xl font-semibold text-center mb-6">Please sign in</h1>
+    <h1 class="text-2xl font-semibold text-center mb-6">Please sign in</h1>
 
-        <label for="username" class="block text-gray-700">Email</label>
-        <input type="email" value="{{ last_username }}" name="_username" id="username" class="block w-full p-2 border rounded-md mb-4" autocomplete="email" required autofocus>
+    <label for="username" class="block text-gray-700">Email</label>
+    <input type="email" value="{{ last_username }}" name="_username" id="username" class="block w-full p-2 border rounded-md mb-4" autocomplete="email" required autofocus />
 
-        <label for="password" class="block text-gray-700">Password</label>
-        <input type="password" name="_password" id="password" class="block w-full p-2 border rounded-md mb-4" autocomplete="current-password" required>
+    <label for="password" class="block text-gray-700">Password</label>
+    <input type="password" name="_password" id="password" class="block w-full p-2 border rounded-md mb-4" autocomplete="current-password" required />
 
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
 
-        {# Remember me section, uncomment if needed #}
-        {#
+    {# Remember me section, uncomment if needed #}
+    {#
         <div class="flex items-center mb-4">
             <input type="checkbox" name="_remember_me" id="_remember_me" class="mr-2">
             <label for="_remember_me" class="text-gray-700">Remember me</label>
         </div>
         #}
 
-        <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Sign in
-        </button>
-    </form>
+    <button type="submit" class="w-full bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">Sign in</button>
+  </form>
 {% endblock %}

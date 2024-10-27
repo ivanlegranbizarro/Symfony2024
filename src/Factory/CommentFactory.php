@@ -2,15 +2,18 @@
 
 namespace App\Factory;
 
-use App\Entity\MicroPost;
 use App\Entity\User;
+use App\Entity\Comment;
+use App\Entity\MicroPost;
+use App\Factory\UserFactory;
+use App\Factory\MicroPostFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<MicroPost>
+ * @extends PersistentProxyObjectFactory<Comment>
  */
-final class MicroPostFactory extends PersistentProxyObjectFactory
+final class CommentFactory extends PersistentProxyObjectFactory
 {
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
@@ -21,7 +24,7 @@ final class MicroPostFactory extends PersistentProxyObjectFactory
 
     public static function class(): string
     {
-        return MicroPost::class;
+        return Comment::class;
     }
 
     /**
@@ -32,9 +35,9 @@ final class MicroPostFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
-            'content' => self::faker()->text(),
-            'title' => self::faker()->text(50),
             'author' => self::faker()->randomElement($this->entityManager->getRepository(User::class)->findAll()),
+            'microPost' => self::faker()->randomElement($this->entityManager->getRepository(MicroPost::class)->findAll()),
+            'text' => self::faker()->text(),
         ];
     }
 
@@ -43,6 +46,8 @@ final class MicroPostFactory extends PersistentProxyObjectFactory
      */
     protected function initialize(): static
     {
-        return $this;
+        return $this
+            // ->afterInstantiate(function(Comment $comment): void {})
+        ;
     }
 }
